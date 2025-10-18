@@ -16,3 +16,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+grpc:
+  endpoints:
+    address: billing-service
+    port: 9091

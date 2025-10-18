@@ -3,6 +3,7 @@ package com.sha.client_service.service.impl;
 import com.sha.client_service.domain.Client;
 import com.sha.client_service.dto.ClientRequestResponseDTO;
 import com.sha.client_service.exception.EmailAlreadyExistException;
+import com.sha.client_service.grpc.BillingServiceGrpcClient;
 import com.sha.client_service.repository.ClientRepository;
 import com.sha.client_service.service.ClientService;
 import com.sha.client_service.util.mapper.ClientMapper;
@@ -21,6 +22,7 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository repository;
     private final ClientMapper clientMapper;
+    private final BillingServiceGrpcClient billingServiceGrpcClient;
 
 
     @Override
@@ -31,6 +33,11 @@ public class ClientServiceImpl implements ClientService {
         }
         Client client = clientMapper.toEntity(dto);
         client = repository.save(client);
+        this.billingServiceGrpcClient.createBillingAccount(
+                client.getId().toString(),
+                client.getName(),
+                client.getEmail()
+        );
         log.info("Client created: {}", client);
         return clientMapper.toDto(client);
     }
@@ -49,6 +56,10 @@ public class ClientServiceImpl implements ClientService {
     public ClientRequestResponseDTO update(String id, ClientRequestResponseDTO dto) {
         Optional<Client> existingClientOpt = repository.findById(UUID.fromString(id));
         if (existingClientOpt.isPresent()) {
+            if (repository.existsByEmail(dto.getEmail())) {
+                log.warn("Client with email {} already exists", dto.getEmail());
+                throw new EmailAlreadyExistException("Client with email " + dto.getEmail() + " already exists");
+            }
             Client existingClient = existingClientOpt.get();
             Client updatedClient = clientMapper.toEntity(dto);
             updatedClient.setId(existingClient.getId());
