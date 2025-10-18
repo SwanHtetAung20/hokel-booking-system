@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/billing_service/billing_service.iml" filepath="$PROJECT_DIR$/billing_service/billing_service.iml" />
       <module fileurl="file://$PROJECT_DIR$/hotel-booking-system.iml" filepath="$PROJECT_DIR$/hotel-booking-system.iml" />
     </modules>
   </component>
