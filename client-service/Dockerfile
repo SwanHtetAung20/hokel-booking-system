@@ -1,4 +1,4 @@
-FROM maven:3.9.9-eclipse-temurin-21-alpine AS Builder
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY src ./src
 
 RUN mvn -B -T 1C clean package -DskipTests
 
-FROM eclipse-temurin:21-jre-alpine AS Runner
+FROM eclipse-temurin:21-jre-alpine AS runner
 
 RUN addgroup -S springrp && adduser -S springusr -G springrp
 
@@ -18,7 +18,7 @@ USER springusr
 
 WORKDIR /app
 
-COPY --from-Builder /app/target/client-service-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/client-service-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 

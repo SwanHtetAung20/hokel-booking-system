@@ -5,9 +5,10 @@ services:
     env_file:
       - .env
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - my-network
   client-service:
@@ -15,10 +16,12 @@ services:
       context: ./client-service
       dockerfile: Dockerfile
     container_name: client_service
+#    environment:
+#        - SPRING_PROFILES_ACTIVE=default
     env_file:
       - .env
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
       - db
     networks:
