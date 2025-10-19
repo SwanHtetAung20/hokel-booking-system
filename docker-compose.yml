@@ -40,6 +40,16 @@ services:
       - db
     networks:
       - my-network
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka_broker
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+    env_file:
+      - .env
+    networks:
+        - my-network
 volumes:
     postgres_data:
 

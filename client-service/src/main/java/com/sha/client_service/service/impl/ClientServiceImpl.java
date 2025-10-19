@@ -4,6 +4,7 @@ import com.sha.client_service.domain.Client;
 import com.sha.client_service.dto.ClientRequestResponseDTO;
 import com.sha.client_service.exception.EmailAlreadyExistException;
 import com.sha.client_service.grpc.BillingServiceGrpcClient;
+import com.sha.client_service.kafka.KafkaProducer;
 import com.sha.client_service.repository.ClientRepository;
 import com.sha.client_service.service.ClientService;
 import com.sha.client_service.util.mapper.ClientMapper;
@@ -23,6 +24,7 @@ public class ClientServiceImpl implements ClientService {
     private final ClientRepository repository;
     private final ClientMapper clientMapper;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
+    private final KafkaProducer kafkaProducer;
 
 
     @Override
@@ -38,6 +40,7 @@ public class ClientServiceImpl implements ClientService {
                 client.getName(),
                 client.getEmail()
         );
+        kafkaProducer.sendEvent(client);
         log.info("Client created: {}", client);
         return clientMapper.toDto(client);
     }
