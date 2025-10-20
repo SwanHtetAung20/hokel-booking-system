@@ -1,4 +1,4 @@
-package com.sha.client_service.domain;
+package com.sha.auth_service.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,20 +11,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "client")
-public class Client {
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,14 +30,12 @@ public class Client {
     @Column(nullable = false)
     private String name;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String phone;
+    private String password;
 
     @Column(nullable = false)
-    private LocalDate dateOfBirth;
-
-    private LocalDate registrationDate;
+    private String role;
 }
