@@ -11,10 +11,21 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - my-network
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka_broker
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+    env_file:
+      - .env
+    networks:
+      - my-network
   client-service:
     build:
       context: ./client-service
       dockerfile: Dockerfile
+    image: client-service:latest
     container_name: client_service
 #    environment:
 #        - SPRING_PROFILES_ACTIVE=default
@@ -30,6 +41,7 @@ services:
     build:
       context: ./billing_service
       dockerfile: Dockerfile
+    image: billing-service:latest
     container_name: billing_service
     env_file:
       - .env
@@ -40,16 +52,21 @@ services:
       - db
     networks:
       - my-network
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafka_broker
-    ports:
-      - "9092:9092"
-      - "9094:9094"
+  analytics-service:
+    build:
+      context: ./analytics-service
+      dockerfile: Dockerfile
+    image: analytics-service:latest
+    container_name: analytics_service
     env_file:
       - .env
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+      - kafka
     networks:
-        - my-network
+      - my-network
 volumes:
     postgres_data:
 
