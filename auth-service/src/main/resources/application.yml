@@ -1,7 +1,11 @@
 spring:
   application:
     name: auth-service
-
+  sql:
+    init:
+      mode: always
+#  profiles:
+#    active: local
   datasource:
     url: jdbc:postgresql://postgres_db:5432/booking
     username: ${POSTGRES_USER}
@@ -17,6 +21,10 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+app:
+  jwt:
+    secret-key: kXpDFWDcsUPczH9xRuSKTrpOcLmjZq4G
 
 server:
   port: 8084

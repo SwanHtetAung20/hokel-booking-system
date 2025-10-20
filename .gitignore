@@ -1,3 +1,4 @@
 .env
 client-service/src/main/resources/application-*.yml
 analytics-service/src/main/resources/application-local.yml
+auth-service/src/main/resources/application-local.yml
