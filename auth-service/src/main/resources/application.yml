@@ -24,7 +24,7 @@ spring:
 
 app:
   jwt:
-    secret-key: kXpDFWDcsUPczH9xRuSKTrpOcLmjZq4G
+    secret-key: YPFTL5BpekKOHBa7bZU+Z6DhwtK7h8eKWoqgDAYq1Kw=
 
 server:
   port: 8084
