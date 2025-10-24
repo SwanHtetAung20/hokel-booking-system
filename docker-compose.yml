@@ -76,8 +76,9 @@ services:
     container_name: auth_service
     env_file:
       - .env
-    ports:
-      - "8084:8084"
+# close the port so that it is only accessible via the API gateway
+#    ports:
+#      - "8084:8084"
     depends_on:
       - db
     networks:
