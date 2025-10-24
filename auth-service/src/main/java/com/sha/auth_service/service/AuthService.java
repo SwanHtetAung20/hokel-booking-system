@@ -1,8 +1,6 @@
 package com.sha.auth_service.service;
 
-import com.sha.auth_service.domain.User;
 import com.sha.auth_service.dto.LoginRequestDTO;
-import com.sha.auth_service.dto.LoginResponseDTO;
 import com.sha.auth_service.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,5 +22,15 @@ public class AuthService {
         return userService.findByEmail(request.getEmail())
                 .filter(user -> passwordEncoder.matches(request.getPassword(), user.getPassword()))
                 .map(x -> jwtUtil.generateToken(x.getEmail(), x.getRole()));
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            jwtUtil.validateToken(token);
+            return true;
+        } catch (Exception e) {
+            log.error("Token validation failed: {}", e.getMessage());
+            return false;
+        }
     }
 }
