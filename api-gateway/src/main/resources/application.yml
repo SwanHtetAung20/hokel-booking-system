@@ -24,6 +24,12 @@ spring:
             - Path=/api-docs/clients
           filters:
             - RewritePath=/api-docs/clients, /v3/api-docs
+        - id: api-docs-auth-route
+          uri: http://auth-service:8084
+          predicates:
+            - Path=/api-docs/auth
+          filters:
+            - RewritePath=/api-docs/auth, /v3/api-docs
 
 #just for local testing
 auth:
