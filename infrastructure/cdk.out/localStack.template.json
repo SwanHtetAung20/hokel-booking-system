@@ -1,0 +1,1972 @@
+{
+ "Resources": {
+  "HotelBookingVpc3991B498": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "HotelBookingVpc"
+     }
+    ]
+   }
+  },
+  "HotelBookingVpcPublicSubnet1SubnetA715B7C9": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.0.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPublicSubnet1RouteTable47F83AAB": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPublicSubnet1RouteTableAssociation0E9799DB": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPublicSubnet1RouteTable47F83AAB"
+    },
+    "SubnetId": {
+     "Ref": "HotelBookingVpcPublicSubnet1SubnetA715B7C9"
+    }
+   }
+  },
+  "HotelBookingVpcPublicSubnet1DefaultRoute02A3C7CC": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "HotelBookingVpcIGW05F7AE22"
+    },
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPublicSubnet1RouteTable47F83AAB"
+    }
+   },
+   "DependsOn": [
+    "HotelBookingVpcVPCGWC5AEAEEB"
+   ]
+  },
+  "HotelBookingVpcPublicSubnet1EIPB3CE5F03": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet1"
+     }
+    ]
+   }
+  },
+  "HotelBookingVpcPublicSubnet1NATGateway77663384": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "HotelBookingVpcPublicSubnet1EIPB3CE5F03",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "HotelBookingVpcPublicSubnet1SubnetA715B7C9"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "HotelBookingVpcPublicSubnet1DefaultRoute02A3C7CC",
+    "HotelBookingVpcPublicSubnet1RouteTableAssociation0E9799DB"
+   ]
+  },
+  "HotelBookingVpcPublicSubnet2SubnetC7EDAD6D": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.64.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPublicSubnet2RouteTable5CE8F622": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPublicSubnet2RouteTableAssociation7FA660F3": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPublicSubnet2RouteTable5CE8F622"
+    },
+    "SubnetId": {
+     "Ref": "HotelBookingVpcPublicSubnet2SubnetC7EDAD6D"
+    }
+   }
+  },
+  "HotelBookingVpcPublicSubnet2DefaultRoute06199B23": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "HotelBookingVpcIGW05F7AE22"
+    },
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPublicSubnet2RouteTable5CE8F622"
+    }
+   },
+   "DependsOn": [
+    "HotelBookingVpcVPCGWC5AEAEEB"
+   ]
+  },
+  "HotelBookingVpcPublicSubnet2EIPA75E5FCD": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet2"
+     }
+    ]
+   }
+  },
+  "HotelBookingVpcPublicSubnet2NATGateway875F3870": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "HotelBookingVpcPublicSubnet2EIPA75E5FCD",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "HotelBookingVpcPublicSubnet2SubnetC7EDAD6D"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PublicSubnet2"
+     }
+    ]
+   },
+   "DependsOn": [
+    "HotelBookingVpcPublicSubnet2DefaultRoute06199B23",
+    "HotelBookingVpcPublicSubnet2RouteTableAssociation7FA660F3"
+   ]
+  },
+  "HotelBookingVpcPrivateSubnet1Subnet005FA3BC": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.128.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet1RouteTable4798F14C": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet1RouteTableAssociation069F1AA4": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPrivateSubnet1RouteTable4798F14C"
+    },
+    "SubnetId": {
+     "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet1DefaultRoute0A93829C": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "HotelBookingVpcPublicSubnet1NATGateway77663384"
+    },
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPrivateSubnet1RouteTable4798F14C"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet2SubnetE88D4F83": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.192.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet2RouteTable9CDC6C7F": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "localStack/HotelBookingVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet2RouteTableAssociationA10E4C17": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPrivateSubnet2RouteTable9CDC6C7F"
+    },
+    "SubnetId": {
+     "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+    }
+   }
+  },
+  "HotelBookingVpcPrivateSubnet2DefaultRoute32B4EA07": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "HotelBookingVpcPublicSubnet2NATGateway875F3870"
+    },
+    "RouteTableId": {
+     "Ref": "HotelBookingVpcPrivateSubnet2RouteTable9CDC6C7F"
+    }
+   }
+  },
+  "HotelBookingVpcIGW05F7AE22": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "HotelBookingVpc"
+     }
+    ]
+   }
+  },
+  "HotelBookingVpcVPCGWC5AEAEEB": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "HotelBookingVpcIGW05F7AE22"
+    },
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "HotelBookingDBInstanceSubnetGroupCBE85157": {
+   "Type": "AWS::RDS::DBSubnetGroup",
+   "Properties": {
+    "DBSubnetGroupDescription": "Subnet group for HotelBookingDBInstance database",
+    "SubnetIds": [
+     {
+      "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+     },
+     {
+      "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+     }
+    ]
+   }
+  },
+  "HotelBookingDBInstanceSecurityGroup9F6DF2A3": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for HotelBookingDBInstance database",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "Description": {
+     "Fn::Join": [
+      "",
+      [
+       "Generated by the CDK for stack: ",
+       {
+        "Ref": "AWS::StackName"
+       }
+      ]
+     ]
+    },
+    "GenerateSecretString": {
+     "ExcludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\",
+     "GenerateStringKey": "password",
+     "PasswordLength": 30,
+     "SecretStringTemplate": "{\"username\":\"admin_user\"}"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "HotelBookingDBInstanceSecretAttachmentF3C1D2C5": {
+   "Type": "AWS::SecretsManager::SecretTargetAttachment",
+   "Properties": {
+    "SecretId": {
+     "Ref": "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb"
+    },
+    "TargetId": {
+     "Ref": "HotelBookingDBInstance00173C70"
+    },
+    "TargetType": "AWS::RDS::DBInstance"
+   }
+  },
+  "HotelBookingDBInstance00173C70": {
+   "Type": "AWS::RDS::DBInstance",
+   "Properties": {
+    "AllocatedStorage": "20",
+    "CopyTagsToSnapshot": true,
+    "DBInstanceClass": "db.t2.micro",
+    "DBName": "hotel_booking_db",
+    "DBSubnetGroupName": {
+     "Ref": "HotelBookingDBInstanceSubnetGroupCBE85157"
+    },
+    "Engine": "postgres",
+    "EngineVersion": "17.2",
+    "MasterUserPassword": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb"
+       },
+       ":SecretString:password::}}"
+      ]
+     ]
+    },
+    "MasterUsername": "admin_user",
+    "StorageType": "gp2",
+    "VPCSecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "HotelBookingDBInstanceSecurityGroup9F6DF2A3",
+       "GroupId"
+      ]
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "HotelBookingDBHealthCheck": {
+   "Type": "AWS::Route53::HealthCheck",
+   "Properties": {
+    "HealthCheckConfig": {
+     "FailureThreshold": 3,
+     "IPAddress": {
+      "Fn::GetAtt": [
+       "HotelBookingDBInstance00173C70",
+       "Endpoint.Address"
+      ]
+     },
+     "Port": {
+      "Fn::GetAtt": [
+       "HotelBookingDBInstance00173C70",
+       "Endpoint.Port"
+      ]
+     },
+     "RequestInterval": 30,
+     "Type": "TCP"
+    }
+   }
+  },
+  "HotelBookingMskCluster": {
+   "Type": "AWS::MSK::Cluster",
+   "Properties": {
+    "BrokerNodeGroupInfo": {
+     "BrokerAZDistribution": "DEFAULT",
+     "ClientSubnets": [
+      {
+       "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+      },
+      {
+       "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+      }
+     ],
+     "InstanceType": "kafka.m5.large"
+    },
+    "ClusterName": "kafka-cluster",
+    "KafkaVersion": "2.8.0",
+    "NumberOfBrokerNodes": 1
+   }
+  },
+  "HotelBookingEcsCluster7D510C19": {
+   "Type": "AWS::ECS::Cluster"
+  },
+  "HotelBookingEcsClusterDefaultServiceDiscoveryNamespace578494BA": {
+   "Type": "AWS::ServiceDiscovery::PrivateDnsNamespace",
+   "Properties": {
+    "Name": "hotel-booking.local",
+    "Vpc": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "AuthServiceTaskDefTaskRoleE6FB6107": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "AuthServiceTaskDef854A2664": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "SPRING_SQL_INIT_MODE",
+        "Value": "always"
+       },
+       {
+        "Name": "JWT_SECRET",
+        "Value": "YPFTL5BpekKOHBa7bZU+Z6DhwtK7h8eKWoqgDAYq1Kw="
+       },
+       {
+        "Name": "SPRING_DATASOURCE_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "jdbc:postgresql://",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Address"
+            ]
+           },
+           ":",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Port"
+            ]
+           },
+           "/auth-service"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_DATASOURCE_PASSWORD",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "{{resolve:secretsmanager:",
+           {
+            "Ref": "HotelBookingDBInstanceSecretAttachmentF3C1D2C5"
+           },
+           ":SecretString:password::}}"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_JPA_HIBERNATE_DDL_AUTO",
+        "Value": "update"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+        "Value": "60000"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_USERNAME",
+        "Value": "admin_user"
+       },
+       {
+        "Name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
+        "Value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
+       }
+      ],
+      "Essential": true,
+      "Image": "auth-service",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "AuthServiceLogGroup34125B38"
+        },
+        "awslogs-stream-prefix": "auth-service",
+        "awslogs-region": {
+         "Ref": "AWS::Region"
+        }
+       }
+      },
+      "Name": "auth-serviceContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 8084,
+        "HostPort": 8084,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "AuthServiceTaskDefExecutionRole7C070A76",
+      "Arn"
+     ]
+    },
+    "Family": "localStackAuthServiceTaskDef64094482",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "AuthServiceTaskDefTaskRoleE6FB6107",
+      "Arn"
+     ]
+    }
+   }
+  },
+  "AuthServiceTaskDefExecutionRole7C070A76": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "AuthServiceTaskDefExecutionRoleDefaultPolicyAE4CAA7C": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "AuthServiceLogGroup34125B38",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "AuthServiceTaskDefExecutionRoleDefaultPolicyAE4CAA7C",
+    "Roles": [
+     {
+      "Ref": "AuthServiceTaskDefExecutionRole7C070A76"
+     }
+    ]
+   }
+  },
+  "AuthServiceLogGroup34125B38": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/auth-service",
+    "RetentionInDays": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "AuthServiceFargateService5D437187": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "HotelBookingEcsCluster7D510C19"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "EnableECSManagedTags": false,
+    "LaunchType": "FARGATE",
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "AuthServiceFargateServiceSecurityGroupF0130E5E",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+       },
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+       }
+      ]
+     }
+    },
+    "ServiceName": "auth-service",
+    "TaskDefinition": {
+     "Ref": "AuthServiceTaskDef854A2664"
+    }
+   },
+   "DependsOn": [
+    "AuthServiceTaskDefTaskRoleE6FB6107",
+    "HotelBookingDBHealthCheck",
+    "HotelBookingDBInstance00173C70",
+    "HotelBookingDBInstanceSecretAttachmentF3C1D2C5",
+    "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb",
+    "HotelBookingDBInstanceSecurityGroup9F6DF2A3",
+    "HotelBookingDBInstanceSubnetGroupCBE85157"
+   ]
+  },
+  "AuthServiceFargateServiceSecurityGroupF0130E5E": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "localStack/AuthServiceFargateService/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   },
+   "DependsOn": [
+    "AuthServiceTaskDefTaskRoleE6FB6107",
+    "HotelBookingDBHealthCheck",
+    "HotelBookingDBInstance00173C70",
+    "HotelBookingDBInstanceSecretAttachmentF3C1D2C5",
+    "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb",
+    "HotelBookingDBInstanceSecurityGroup9F6DF2A3",
+    "HotelBookingDBInstanceSubnetGroupCBE85157"
+   ]
+  },
+  "BillingServiceTaskDefTaskRoleA6D80CE5": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "BillingServiceTaskDef58090539": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "SPRING_SQL_INIT_MODE",
+        "Value": "always"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "jdbc:postgresql://",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Address"
+            ]
+           },
+           ":",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Port"
+            ]
+           },
+           "/billing-service"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_DATASOURCE_PASSWORD",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "{{resolve:secretsmanager:",
+           {
+            "Ref": "HotelBookingDBInstanceSecretAttachmentF3C1D2C5"
+           },
+           ":SecretString:password::}}"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_JPA_HIBERNATE_DDL_AUTO",
+        "Value": "update"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+        "Value": "60000"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_USERNAME",
+        "Value": "admin_user"
+       },
+       {
+        "Name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
+        "Value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
+       }
+      ],
+      "Essential": true,
+      "Image": "billing-service",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "BillingServiceLogGroupDD61E740"
+        },
+        "awslogs-stream-prefix": "billing-service",
+        "awslogs-region": {
+         "Ref": "AWS::Region"
+        }
+       }
+      },
+      "Name": "billing-serviceContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 8081,
+        "HostPort": 8081,
+        "Protocol": "tcp"
+       },
+       {
+        "ContainerPort": 9091,
+        "HostPort": 9091,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "BillingServiceTaskDefExecutionRoleEFBC0673",
+      "Arn"
+     ]
+    },
+    "Family": "localStackBillingServiceTaskDefCBF09615",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "BillingServiceTaskDefTaskRoleA6D80CE5",
+      "Arn"
+     ]
+    }
+   }
+  },
+  "BillingServiceTaskDefExecutionRoleEFBC0673": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "BillingServiceTaskDefExecutionRoleDefaultPolicy30F56DC0": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "BillingServiceLogGroupDD61E740",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BillingServiceTaskDefExecutionRoleDefaultPolicy30F56DC0",
+    "Roles": [
+     {
+      "Ref": "BillingServiceTaskDefExecutionRoleEFBC0673"
+     }
+    ]
+   }
+  },
+  "BillingServiceLogGroupDD61E740": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/billing-service",
+    "RetentionInDays": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "BillingServiceFargateService45A2EED6": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "HotelBookingEcsCluster7D510C19"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "EnableECSManagedTags": false,
+    "LaunchType": "FARGATE",
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "BillingServiceFargateServiceSecurityGroup02EEBE8E",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+       },
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+       }
+      ]
+     }
+    },
+    "ServiceName": "billing-service",
+    "TaskDefinition": {
+     "Ref": "BillingServiceTaskDef58090539"
+    }
+   },
+   "DependsOn": [
+    "BillingServiceTaskDefTaskRoleA6D80CE5"
+   ]
+  },
+  "BillingServiceFargateServiceSecurityGroup02EEBE8E": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "localStack/BillingServiceFargateService/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   },
+   "DependsOn": [
+    "BillingServiceTaskDefTaskRoleA6D80CE5"
+   ]
+  },
+  "AnalyticsServiceTaskDefTaskRoleB918AE09": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "AnalyticsServiceTaskDef6C4A1331": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "SPRING_SQL_INIT_MODE",
+        "Value": "always"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "jdbc:postgresql://",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Address"
+            ]
+           },
+           ":",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Port"
+            ]
+           },
+           "/analytics-service"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_DATASOURCE_PASSWORD",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "{{resolve:secretsmanager:",
+           {
+            "Ref": "HotelBookingDBInstanceSecretAttachmentF3C1D2C5"
+           },
+           ":SecretString:password::}}"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_JPA_HIBERNATE_DDL_AUTO",
+        "Value": "update"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+        "Value": "60000"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_USERNAME",
+        "Value": "admin_user"
+       },
+       {
+        "Name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
+        "Value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
+       }
+      ],
+      "Essential": true,
+      "Image": "analytics-service",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "AnalyticsServiceLogGroupBD82F12A"
+        },
+        "awslogs-stream-prefix": "analytics-service",
+        "awslogs-region": {
+         "Ref": "AWS::Region"
+        }
+       }
+      },
+      "Name": "analytics-serviceContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 8082,
+        "HostPort": 8082,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "AnalyticsServiceTaskDefExecutionRoleA927CA46",
+      "Arn"
+     ]
+    },
+    "Family": "localStackAnalyticsServiceTaskDef1F11CF0D",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "AnalyticsServiceTaskDefTaskRoleB918AE09",
+      "Arn"
+     ]
+    }
+   }
+  },
+  "AnalyticsServiceTaskDefExecutionRoleA927CA46": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "AnalyticsServiceTaskDefExecutionRoleDefaultPolicy6FF4E1B2": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "AnalyticsServiceLogGroupBD82F12A",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "AnalyticsServiceTaskDefExecutionRoleDefaultPolicy6FF4E1B2",
+    "Roles": [
+     {
+      "Ref": "AnalyticsServiceTaskDefExecutionRoleA927CA46"
+     }
+    ]
+   }
+  },
+  "AnalyticsServiceLogGroupBD82F12A": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/analytics-service",
+    "RetentionInDays": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "AnalyticsServiceFargateService65915EFE": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "HotelBookingEcsCluster7D510C19"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "EnableECSManagedTags": false,
+    "LaunchType": "FARGATE",
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "AnalyticsServiceFargateServiceSecurityGroupDE56E7F1",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+       },
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+       }
+      ]
+     }
+    },
+    "ServiceName": "analytics-service",
+    "TaskDefinition": {
+     "Ref": "AnalyticsServiceTaskDef6C4A1331"
+    }
+   },
+   "DependsOn": [
+    "AnalyticsServiceTaskDefTaskRoleB918AE09",
+    "HotelBookingMskCluster"
+   ]
+  },
+  "AnalyticsServiceFargateServiceSecurityGroupDE56E7F1": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "localStack/AnalyticsServiceFargateService/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   },
+   "DependsOn": [
+    "AnalyticsServiceTaskDefTaskRoleB918AE09",
+    "HotelBookingMskCluster"
+   ]
+  },
+  "ClientServiceTaskDefTaskRoleBA6CF4D5": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "ClientServiceTaskDefAAE0D773": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "BILLING_SERVICE_GRPC_PORT",
+        "Value": "9091"
+       },
+       {
+        "Name": "SPRING_SQL_INIT_MODE",
+        "Value": "always"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_URL",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "jdbc:postgresql://",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Address"
+            ]
+           },
+           ":",
+           {
+            "Fn::GetAtt": [
+             "HotelBookingDBInstance00173C70",
+             "Endpoint.Port"
+            ]
+           },
+           "/client-service"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_DATASOURCE_PASSWORD",
+        "Value": {
+         "Fn::Join": [
+          "",
+          [
+           "{{resolve:secretsmanager:",
+           {
+            "Ref": "HotelBookingDBInstanceSecretAttachmentF3C1D2C5"
+           },
+           ":SecretString:password::}}"
+          ]
+         ]
+        }
+       },
+       {
+        "Name": "SPRING_JPA_HIBERNATE_DDL_AUTO",
+        "Value": "update"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT",
+        "Value": "60000"
+       },
+       {
+        "Name": "SPRING_DATASOURCE_USERNAME",
+        "Value": "admin_user"
+       },
+       {
+        "Name": "SPRING_KAFKA_BOOTSTRAP_SERVERS",
+        "Value": "localhost.localstack.cloud:4510, localhost.localstack.cloud:4511, localhost.localstack.cloud:4512"
+       },
+       {
+        "Name": "BILLING_SERVICE_ADDRESS",
+        "Value": "host.docker.internal"
+       }
+      ],
+      "Essential": true,
+      "Image": "client-service",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "ClientServiceLogGroup10401AD4"
+        },
+        "awslogs-stream-prefix": "client-service",
+        "awslogs-region": {
+         "Ref": "AWS::Region"
+        }
+       }
+      },
+      "Name": "client-serviceContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 8080,
+        "HostPort": 8080,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "ClientServiceTaskDefExecutionRole12A6168A",
+      "Arn"
+     ]
+    },
+    "Family": "localStackClientServiceTaskDef6E6402D3",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "ClientServiceTaskDefTaskRoleBA6CF4D5",
+      "Arn"
+     ]
+    }
+   }
+  },
+  "ClientServiceTaskDefExecutionRole12A6168A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "ClientServiceTaskDefExecutionRoleDefaultPolicy27AF5F01": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ClientServiceLogGroup10401AD4",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ClientServiceTaskDefExecutionRoleDefaultPolicy27AF5F01",
+    "Roles": [
+     {
+      "Ref": "ClientServiceTaskDefExecutionRole12A6168A"
+     }
+    ]
+   }
+  },
+  "ClientServiceLogGroup10401AD4": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/client-service",
+    "RetentionInDays": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "ClientServiceFargateService27414230": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "HotelBookingEcsCluster7D510C19"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "EnableECSManagedTags": false,
+    "LaunchType": "FARGATE",
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "ClientServiceFargateServiceSecurityGroup298AF987",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+       },
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+       }
+      ]
+     }
+    },
+    "ServiceName": "client-service",
+    "TaskDefinition": {
+     "Ref": "ClientServiceTaskDefAAE0D773"
+    }
+   },
+   "DependsOn": [
+    "BillingServiceFargateServiceSecurityGroup02EEBE8E",
+    "BillingServiceFargateService45A2EED6",
+    "ClientServiceTaskDefTaskRoleBA6CF4D5",
+    "HotelBookingDBHealthCheck",
+    "HotelBookingDBInstance00173C70",
+    "HotelBookingDBInstanceSecretAttachmentF3C1D2C5",
+    "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb",
+    "HotelBookingDBInstanceSecurityGroup9F6DF2A3",
+    "HotelBookingDBInstanceSubnetGroupCBE85157",
+    "HotelBookingMskCluster"
+   ]
+  },
+  "ClientServiceFargateServiceSecurityGroup298AF987": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "localStack/ClientServiceFargateService/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   },
+   "DependsOn": [
+    "BillingServiceFargateServiceSecurityGroup02EEBE8E",
+    "BillingServiceFargateService45A2EED6",
+    "ClientServiceTaskDefTaskRoleBA6CF4D5",
+    "HotelBookingDBHealthCheck",
+    "HotelBookingDBInstance00173C70",
+    "HotelBookingDBInstanceSecretAttachmentF3C1D2C5",
+    "localStackHotelBookingDBInstanceSecret6899A9543fdaad7efa858a3daf9490cf0a702aeb",
+    "HotelBookingDBInstanceSecurityGroup9F6DF2A3",
+    "HotelBookingDBInstanceSubnetGroupCBE85157",
+    "HotelBookingMskCluster"
+   ]
+  },
+  "ApiGatewayTaskDefTaskRoleEA43FA67": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "ApiGatewayTaskDef5C945AAC": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "SPRING_PROFILES_ACTIVE",
+        "Value": "prod"
+       },
+       {
+        "Name": "AUTH_SERVICE_URL",
+        "Value": "http://host.docker.internal:8084"
+       }
+      ],
+      "Essential": true,
+      "Image": "api-gateway",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "ApiGatewayLogGroupA9770429"
+        },
+        "awslogs-stream-prefix": "api-gateway",
+        "awslogs-region": {
+         "Ref": "AWS::Region"
+        }
+       }
+      },
+      "Name": "ApiGatewayContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 8083,
+        "HostPort": 8083,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "ApiGatewayTaskDefExecutionRole8F365F37",
+      "Arn"
+     ]
+    },
+    "Family": "localStackApiGatewayTaskDef723B48B9",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "ApiGatewayTaskDefTaskRoleEA43FA67",
+      "Arn"
+     ]
+    }
+   }
+  },
+  "ApiGatewayTaskDefExecutionRole8F365F37": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   }
+  },
+  "ApiGatewayTaskDefExecutionRoleDefaultPolicy3F6DC95E": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ApiGatewayLogGroupA9770429",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ApiGatewayTaskDefExecutionRoleDefaultPolicy3F6DC95E",
+    "Roles": [
+     {
+      "Ref": "ApiGatewayTaskDefExecutionRole8F365F37"
+     }
+    ]
+   }
+  },
+  "ApiGatewayLogGroupA9770429": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/api-gateway",
+    "RetentionInDays": 1
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete"
+  },
+  "ApiGatewayFargateServiceLB64C89CC5": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "ApiGatewayFargateServiceLBSecurityGroup3DFE1405",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Ref": "HotelBookingVpcPublicSubnet1SubnetA715B7C9"
+     },
+     {
+      "Ref": "HotelBookingVpcPublicSubnet2SubnetC7EDAD6D"
+     }
+    ],
+    "Type": "application"
+   },
+   "DependsOn": [
+    "HotelBookingVpcPublicSubnet1DefaultRoute02A3C7CC",
+    "HotelBookingVpcPublicSubnet1RouteTableAssociation0E9799DB",
+    "HotelBookingVpcPublicSubnet2DefaultRoute06199B23",
+    "HotelBookingVpcPublicSubnet2RouteTableAssociation7FA660F3"
+   ]
+  },
+  "ApiGatewayFargateServiceLBSecurityGroup3DFE1405": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Automatically created Security Group for ELB localStackApiGatewayFargateServiceLB189DB269",
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "ApiGatewayFargateServiceLBSecurityGrouptolocalStackApiGatewayFargateServiceSecurityGroupA9427F1380832E54B491": {
+   "Type": "AWS::EC2::SecurityGroupEgress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "DestinationSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ApiGatewayFargateServiceSecurityGroupDF3E7707",
+      "GroupId"
+     ]
+    },
+    "FromPort": 8083,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ApiGatewayFargateServiceLBSecurityGroup3DFE1405",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "ToPort": 8083
+   }
+  },
+  "ApiGatewayFargateServiceLBPublicListener66830EDC": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "ApiGatewayFargateServiceLBPublicListenerECSGroup0D15FD54"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "ApiGatewayFargateServiceLB64C89CC5"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   }
+  },
+  "ApiGatewayFargateServiceLBPublicListenerECSGroup0D15FD54": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "Port": 80,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   }
+  },
+  "ApiGatewayFargateServiceE79E71B8": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "HotelBookingEcsCluster7D510C19"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "ApiGatewayContainer",
+      "ContainerPort": 8083,
+      "TargetGroupArn": {
+       "Ref": "ApiGatewayFargateServiceLBPublicListenerECSGroup0D15FD54"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "DISABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "ApiGatewayFargateServiceSecurityGroupDF3E7707",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet1Subnet005FA3BC"
+       },
+       {
+        "Ref": "HotelBookingVpcPrivateSubnet2SubnetE88D4F83"
+       }
+      ]
+     }
+    },
+    "ServiceName": "api-gateway",
+    "TaskDefinition": {
+     "Ref": "ApiGatewayTaskDef5C945AAC"
+    }
+   },
+   "DependsOn": [
+    "ApiGatewayFargateServiceLBPublicListenerECSGroup0D15FD54",
+    "ApiGatewayFargateServiceLBPublicListener66830EDC",
+    "ApiGatewayTaskDefTaskRoleEA43FA67"
+   ]
+  },
+  "ApiGatewayFargateServiceSecurityGroupDF3E7707": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "localStack/ApiGatewayFargateService/Service/SecurityGroup",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "HotelBookingVpc3991B498"
+    }
+   },
+   "DependsOn": [
+    "ApiGatewayTaskDefTaskRoleEA43FA67"
+   ]
+  },
+  "ApiGatewayFargateServiceSecurityGroupfromlocalStackApiGatewayFargateServiceLBSecurityGroup412272C580834B5CE63F": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 8083,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ApiGatewayFargateServiceSecurityGroupDF3E7707",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ApiGatewayFargateServiceLBSecurityGroup3DFE1405",
+      "GroupId"
+     ]
+    },
+    "ToPort": 8083
+   },
+   "DependsOn": [
+    "ApiGatewayTaskDefTaskRoleEA43FA67"
+   ]
+  }
+ },
+ "Outputs": {
+  "ApiGatewayFargateServiceLoadBalancerDNS752A2562": {
+   "Value": {
+    "Fn::GetAtt": [
+     "ApiGatewayFargateServiceLB64C89CC5",
+     "DNSName"
+    ]
+   }
+  },
+  "ApiGatewayFargateServiceServiceURL2F69A743": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "ApiGatewayFargateServiceLB64C89CC5",
+        "DNSName"
+       ]
+      }
+     ]
+    ]
+   }
+  }
+ }
+}
